@@ -34,10 +34,10 @@ function createFeatures(earthquakeData) {
     function onEachLayer(feature) {
         return new L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
           radius: circleSize(feature.properties.mag),
-          fillOpacity: 0.8,
+          fillOpacity: 0.7,
           color: getColor(feature.properties.mag),
           fillColor: getColor(feature.properties.mag),
-          weight: .2,
+          weight: .5,
           opacity: 1
         });
       }
@@ -97,6 +97,9 @@ function createMap(earthquakes) {
         layers: [darkmap, earthquakes]
     });
 
+    // Create a layer control
+    // Pass in our baseMaps and overlayMaps
+    // Add the layer control to the map
     L.control.layers(baseMaps, overlayMaps, {
         collapsed: false
     }).addTo(myMap);
@@ -111,13 +114,11 @@ function createMap(earthquakes) {
 
         // loop through our density intervals and generate a label with a colored square for each interval
         for (var i = 0; i < mag.length; i++) {
-            div.innerHTML +=
-                '<i style="background:' + getColor(mag[i]) + '"></i> ' +
+            div.innerHTML += '<i style="background:' + getColor(i) + '"></i> ' +
                 mag[i] + '<br>';
         }
-
         return div;
-    };legend.addTo(map);
+    };legend.addTo(myMap);
     
 }
 
@@ -135,22 +136,24 @@ function circleSize(size) {
 function getColor(magnitude) {
     // Conditionals for magnitude
     if (magnitude >= 5) {
-        return "red";
+        return "#bd0026";
       }
       else if (magnitude >= 4) {
-        return "peru";
+        return "#f03b20";
       }
       else if (magnitude >= 3) {
-       return "darkorange";
+       return "#fd8d3c";
       }
       else if (magnitude >= 2) {
-        return "yellow";
+        return "#feb24c";
       }
       else if (magnitude >= 1) {
-        return "yellowgreen";
+        return "#fed976";
       }
       else {
-        return "green";
+        return "#ffffb2";
       }
 };
+
+
 
